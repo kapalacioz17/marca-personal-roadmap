@@ -7,10 +7,13 @@ interface FieldProps {
 export function Field({ label, hint, children }: FieldProps) {
   return (
     <div className="space-y-1.5">
-      <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
+      <label
+        className="block text-[11px] font-semibold uppercase tracking-widest"
+        style={{ color: 'rgba(196,181,253,0.7)' }}
+      >
         {label}
       </label>
-      {hint && <p className="text-xs text-slate-500">{hint}</p>}
+      {hint && <p className="text-xs" style={{ color: 'rgba(100,116,139,0.8)' }}>{hint}</p>}
       {children}
     </div>
   );
@@ -21,7 +24,22 @@ export function Input(props: InputProps) {
   return (
     <input
       {...props}
-      className={`w-full bg-[#1e1e2e] border border-[#3a3a5c] rounded-lg px-3 py-2 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/30 transition-all ${props.className ?? ''}`}
+      className={`w-full rounded-lg px-3 py-2 text-sm text-white placeholder-slate-600 outline-none transition-all ${props.className ?? ''}`}
+      style={{
+        background: 'rgba(124,58,237,0.04)',
+        border: '1px solid rgba(124,58,237,0.18)',
+        ...(props.style ?? {}),
+      }}
+      onFocus={e => {
+        e.currentTarget.style.borderColor = 'rgba(168,85,247,0.55)';
+        e.currentTarget.style.boxShadow = '0 0 0 3px rgba(124,58,237,0.12)';
+        props.onFocus?.(e);
+      }}
+      onBlur={e => {
+        e.currentTarget.style.borderColor = 'rgba(124,58,237,0.18)';
+        e.currentTarget.style.boxShadow = 'none';
+        props.onBlur?.(e);
+      }}
     />
   );
 }
@@ -32,7 +50,22 @@ export function Textarea(props: TextareaProps) {
     <textarea
       rows={3}
       {...props}
-      className={`w-full bg-[#1e1e2e] border border-[#3a3a5c] rounded-lg px-3 py-2 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/30 transition-all resize-none ${props.className ?? ''}`}
+      className={`w-full rounded-lg px-3 py-2 text-sm text-white placeholder-slate-600 outline-none transition-all resize-none ${props.className ?? ''}`}
+      style={{
+        background: 'rgba(124,58,237,0.04)',
+        border: '1px solid rgba(124,58,237,0.18)',
+        ...(props.style ?? {}),
+      }}
+      onFocus={e => {
+        e.currentTarget.style.borderColor = 'rgba(168,85,247,0.55)';
+        e.currentTarget.style.boxShadow = '0 0 0 3px rgba(124,58,237,0.12)';
+        props.onFocus?.(e);
+      }}
+      onBlur={e => {
+        e.currentTarget.style.borderColor = 'rgba(124,58,237,0.18)';
+        e.currentTarget.style.boxShadow = 'none';
+        props.onBlur?.(e);
+      }}
     />
   );
 }
@@ -44,8 +77,21 @@ interface CardProps {
 }
 export function Card({ children, className = '', title }: CardProps) {
   return (
-    <div className={`bg-[#16162a] border border-[#2a2a3e] rounded-xl p-5 space-y-4 ${className}`}>
-      {title && <h3 className="text-sm font-semibold text-purple-300">{title}</h3>}
+    <div
+      className={`rounded-xl p-5 space-y-4 ${className}`}
+      style={{
+        background: 'rgba(124,58,237,0.04)',
+        border: '1px solid rgba(124,58,237,0.12)',
+      }}
+    >
+      {title && (
+        <h3
+          className="text-sm font-semibold"
+          style={{ color: '#c4b5fd' }}
+        >
+          {title}
+        </h3>
+      )}
       {children}
     </div>
   );
@@ -63,11 +109,10 @@ export function ListField({ label, hint, values, onChange, placeholder }: ListFi
     <Field label={label} hint={hint}>
       <div className="space-y-2">
         {values.map((v, i) => (
-          // key estable basado en posición semántica: estas listas tienen longitud fija
-          // (no se elimina del medio), así que el índice como key es seguro aquí.
-          // MercadoModule tiene su propia tabla con keys por campo.
           <div key={`${label}-${i}`} className="flex items-center gap-2">
-            <span className="text-slate-600 text-xs w-4 shrink-0">{i + 1}.</span>
+            <span className="text-[11px] w-4 shrink-0 tabular-nums" style={{ color: 'rgba(124,58,237,0.5)' }}>
+              {i + 1}.
+            </span>
             <Input
               value={v}
               onChange={e => onChange(i, e.target.value)}

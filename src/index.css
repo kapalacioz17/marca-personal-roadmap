@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-* {
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -8,23 +8,48 @@
 
 body {
   font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
-  background: #0f0f13;
+  background: #070712;
   color: #e2e8f0;
   min-height: 100vh;
+}
+
+/* Gradientes ambientales fijos — bajo todo el contenido */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse at 15% 0%, rgba(124, 58, 237, 0.09) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 100%, rgba(168, 85, 247, 0.06) 0%, transparent 45%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 #root {
   width: 100%;
   min-height: 100vh;
+  position: relative;
+  z-index: 1;
 }
 
+/* Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: #1a1a2e;
+  background: #0a0a14;
 }
 ::-webkit-scrollbar-thumb {
-  background: #4a3f6b;
+  background: #3a2f5e;
   border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #5a4f8e;
+}
+
+/* Glow en texto de números grandes */
+.text-glow-violet {
+  text-shadow:
+    0 0 16px rgba(168, 85, 247, 0.55),
+    0 0 36px rgba(124, 58, 237, 0.35);
 }

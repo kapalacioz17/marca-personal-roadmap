@@ -12,24 +12,46 @@ interface HeaderProps {
 
 export function Header({ title, emoji, isDemo, onLoadDemo, onReset, onExport, onResetSection }: HeaderProps) {
   return (
-    <header className="sticky top-0 z-10 bg-[#0f0f13]/95 backdrop-blur border-b border-[#2a2a3e] px-6 py-3 flex items-center justify-between">
+    <header
+      className="sticky top-0 z-10 px-6 py-3 flex items-center justify-between backdrop-blur-md"
+      style={{
+        background: 'rgba(7,7,18,0.92)',
+        borderBottom: '1px solid rgba(124,58,237,0.14)',
+      }}
+    >
       <div className="flex items-center gap-3">
         <span className="text-2xl">{emoji}</span>
         <div>
           <h1 className="text-white font-semibold text-base leading-tight">{title}</h1>
           {isDemo && (
-            <span className="text-xs text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded-full">
+            <span
+              className="text-[11px] px-2 py-0.5 rounded-full"
+              style={{
+                color: '#fbbf24',
+                background: 'rgba(251,191,36,0.1)',
+                border: '1px solid rgba(251,191,36,0.2)',
+              }}
+            >
               Modo demo — datos de ejemplo cargados
             </span>
           )}
         </div>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1.5">
         <button
           onClick={onResetSection}
           title="Limpiar este módulo"
-          className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-red-400 px-3 py-1.5 rounded-lg hover:bg-red-400/10 transition-all"
+          className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg transition-all"
+          style={{ color: 'rgba(148,163,184,0.7)' }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLButtonElement).style.color = '#f87171';
+            (e.currentTarget as HTMLButtonElement).style.background = 'rgba(248,113,113,0.08)';
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLButtonElement).style.color = 'rgba(148,163,184,0.7)';
+            (e.currentTarget as HTMLButtonElement).style.background = 'transparent';
+          }}
         >
           <Trash2 size={13} />
           Limpiar módulo
@@ -38,11 +60,12 @@ export function Header({ title, emoji, isDemo, onLoadDemo, onReset, onExport, on
         <button
           onClick={onLoadDemo}
           title="Ver datos de ejemplo"
-          className={`flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg transition-all ${
+          className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg transition-all"
+          style={
             isDemo
-              ? 'text-amber-400 bg-amber-400/10 border border-amber-400/30'
-              : 'text-slate-400 hover:text-amber-400 hover:bg-amber-400/10'
-          }`}
+              ? { color: '#fbbf24', background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.25)' }
+              : { color: 'rgba(148,163,184,0.7)' }
+          }
         >
           <Sparkles size={13} />
           Ver demo
@@ -51,7 +74,16 @@ export function Header({ title, emoji, isDemo, onLoadDemo, onReset, onExport, on
         <button
           onClick={onReset}
           title="Empezar desde cero"
-          className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-white px-3 py-1.5 rounded-lg hover:bg-white/5 transition-all"
+          className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg transition-all"
+          style={{ color: 'rgba(148,163,184,0.7)' }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLButtonElement).style.color = '#fff';
+            (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.05)';
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLButtonElement).style.color = 'rgba(148,163,184,0.7)';
+            (e.currentTarget as HTMLButtonElement).style.background = 'transparent';
+          }}
         >
           <RefreshCw size={13} />
           Nuevo roadmap
@@ -59,7 +91,19 @@ export function Header({ title, emoji, isDemo, onLoadDemo, onReset, onExport, on
 
         <button
           onClick={onExport}
-          className="flex items-center gap-1.5 text-xs text-white bg-purple-600 hover:bg-purple-500 px-3 py-1.5 rounded-lg transition-all"
+          className="flex items-center gap-1.5 text-xs text-white px-3 py-1.5 rounded-lg transition-all"
+          style={{
+            background: 'linear-gradient(135deg, #7c3aed, #a855f7)',
+            boxShadow: '0 0 12px rgba(124,58,237,0.35)',
+          }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 0 18px rgba(168,85,247,0.55)';
+            (e.currentTarget as HTMLButtonElement).style.opacity = '0.9';
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 0 12px rgba(124,58,237,0.35)';
+            (e.currentTarget as HTMLButtonElement).style.opacity = '1';
+          }}
         >
           <Download size={13} />
           Exportar
