@@ -8,16 +8,16 @@ interface SidebarItem {
 }
 
 const items: SidebarItem[] = [
-  { id: 'dashboard',     label: 'Dashboard',         icon: <LayoutDashboard size={15} /> },
-  { id: 'vision',        label: 'Visión Digital',     icon: <Target size={15} /> },
-  { id: 'mercado',       label: 'Mercado',            icon: <Store size={15} /> },
-  { id: 'avatar',        label: 'Avatar',             icon: <User size={15} /> },
-  { id: 'oferta',        label: 'Oferta',             icon: <Gift size={15} /> },
-  { id: 'transformacion',label: 'Transformación',     icon: <Sparkles size={15} /> },
-  { id: 'lider',         label: 'Líder Carismático',  icon: <Crown size={15} /> },
-  { id: 'movimiento',    label: 'Movimiento',         icon: <Flame size={15} /> },
-  { id: 'contenido',     label: 'Contenido',          icon: <Video size={15} /> },
-  { id: 'ideas',         label: 'Ideas',              icon: <Lightbulb size={15} /> },
+  { id: 'dashboard',     label: 'Dashboard',         icon: <LayoutDashboard size={16} strokeWidth={1.75} /> },
+  { id: 'vision',        label: 'Visión Digital',     icon: <Target size={16} strokeWidth={1.75} /> },
+  { id: 'mercado',       label: 'Mercado',            icon: <Store size={16} strokeWidth={1.75} /> },
+  { id: 'avatar',        label: 'Avatar',             icon: <User size={16} strokeWidth={1.75} /> },
+  { id: 'oferta',        label: 'Oferta',             icon: <Gift size={16} strokeWidth={1.75} /> },
+  { id: 'transformacion',label: 'Transformación',     icon: <Sparkles size={16} strokeWidth={1.75} /> },
+  { id: 'lider',         label: 'Líder Carismático',  icon: <Crown size={16} strokeWidth={1.75} /> },
+  { id: 'movimiento',    label: 'Movimiento',         icon: <Flame size={16} strokeWidth={1.75} /> },
+  { id: 'contenido',     label: 'Contenido',          icon: <Video size={16} strokeWidth={1.75} /> },
+  { id: 'ideas',         label: 'Ideas',              icon: <Lightbulb size={16} strokeWidth={1.75} /> },
 ];
 
 const ID_TO_KEY: Record<string, string> = {

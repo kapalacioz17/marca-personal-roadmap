@@ -96,7 +96,25 @@ export default function App() {
           onResetSection={handleResetSection}
         />
 
-        <main className="flex-1 overflow-y-auto p-8 md:p-10">
+        <main
+          style={{
+            flex: 1,
+            overflow: 'hidden',
+            background: '#070712',
+            padding: '1.25rem',
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          {/* Contenedor elevado — réplica exacta de Layout C */}
+          <div style={{
+            flex: 1,
+            overflowY: 'auto',
+            background: 'rgba(124,58,237,0.04)',
+            border: '1px solid rgba(124,58,237,0.14)',
+            borderRadius: '18px',
+            padding: '2rem 2.25rem',
+          }}>
           {activeModule === 'dashboard' && (
             <DashboardModule data={data} progress={progress} onNavigate={setActiveModule} />
           )}
@@ -127,6 +145,7 @@ export default function App() {
           {activeModule === 'ideas' && (
             <IdeasModule data={data.ideas} onChange={updateIdeas} />
           )}
+          </div>
         </main>
       </div>
     </div>
