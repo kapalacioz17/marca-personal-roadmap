@@ -20,7 +20,6 @@ export function Header({ title, emoji, isDemo, onLoadDemo, onReset, onExport, on
       }}
     >
       <div className="flex items-center gap-3">
-        <span className="text-2xl">{emoji}</span>
         <div>
           <h1 className="text-white font-semibold text-base leading-tight">{title}</h1>
           {isDemo && (
