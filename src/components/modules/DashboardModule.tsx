@@ -9,15 +9,15 @@ interface ModuleCard {
 }
 
 const modules: ModuleCard[] = [
-  { id: 'vision',        progressKey: 'visionDigital',    emoji: '🎯', label: 'Visión Digital',    summary: d => d.visionDigital.cuantoQuieresGanar || 'Sin definir' },
-  { id: 'mercado',       progressKey: 'mercado',          emoji: '🏪', label: 'Mercado',           summary: d => d.mercado.micronicho || 'Sin definir' },
-  { id: 'avatar',        progressKey: 'avatar',           emoji: '👤', label: 'Avatar',            summary: d => d.avatar.rangoEdad ? `${d.avatar.sexo}, ${d.avatar.rangoEdad}` : 'Sin definir' },
-  { id: 'oferta',        progressKey: 'oferta',           emoji: '💎', label: 'Oferta',            summary: d => d.oferta.productoLowTicket.nombre || 'Sin definir' },
-  { id: 'transformacion',progressKey: 'transformacion',   emoji: '✨', label: 'Transformación',    summary: d => d.transformacion.vehiculoUnico || 'Sin definir' },
-  { id: 'lider',         progressKey: 'liderCarismatico', emoji: '🦁', label: 'Líder Carismático', summary: d => d.liderCarismatico.arquetipos.filter(Boolean).join(' + ') || 'Sin definir' },
-  { id: 'movimiento',    progressKey: 'movimiento',       emoji: '🔥', label: 'Movimiento',        summary: d => d.movimiento.slogan || 'Sin definir' },
-  { id: 'contenido',     progressKey: 'contenido',        emoji: '📱', label: 'Contenido',         summary: d => d.contenido.frecuencia || 'Sin definir' },
-  { id: 'ideas',         progressKey: 'ideas',            emoji: '💡', label: 'Ideas',             summary: d => `${d.ideas.filter(i => i.contenido).length} ideas guardadas` },
+  { id: 'vision',         progressKey: 'visionDigital',    emoji: '🎯', label: 'Visión Digital',    summary: d => d.visionDigital.cuantoQuieresGanar || 'Sin definir' },
+  { id: 'mercado',        progressKey: 'mercado',          emoji: '🏪', label: 'Mercado',           summary: d => d.mercado.micronicho || 'Sin definir' },
+  { id: 'avatar',         progressKey: 'avatar',           emoji: '👤', label: 'Avatar',            summary: d => d.avatar.rangoEdad ? `${d.avatar.sexo}, ${d.avatar.rangoEdad}` : 'Sin definir' },
+  { id: 'oferta',         progressKey: 'oferta',           emoji: '💎', label: 'Oferta',            summary: d => d.oferta.productoLowTicket.nombre || 'Sin definir' },
+  { id: 'transformacion', progressKey: 'transformacion',   emoji: '✨', label: 'Transformación',    summary: d => d.transformacion.vehiculoUnico || 'Sin definir' },
+  { id: 'lider',          progressKey: 'liderCarismatico', emoji: '🦁', label: 'Líder Carismático', summary: d => d.liderCarismatico.arquetipos.filter(Boolean).join(' + ') || 'Sin definir' },
+  { id: 'movimiento',     progressKey: 'movimiento',       emoji: '🔥', label: 'Movimiento',        summary: d => d.movimiento.slogan || 'Sin definir' },
+  { id: 'contenido',      progressKey: 'contenido',        emoji: '📱', label: 'Contenido',         summary: d => d.contenido.frecuencia || 'Sin definir' },
+  { id: 'ideas',          progressKey: 'ideas',            emoji: '💡', label: 'Ideas',             summary: d => `${d.ideas.filter(i => i.contenido).length} ideas guardadas` },
 ];
 
 interface Props {
@@ -35,78 +35,82 @@ export function DashboardModule({ data, progress, onNavigate }: Props) {
   const pending    = allProgress.filter(p => p === 0).length;
 
   return (
-    <div className="space-y-6">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
 
-      {/* ── Hero card ── */}
-      <div
-        className="relative rounded-2xl p-6 overflow-hidden"
-        style={{
-          background: 'linear-gradient(135deg, rgba(124,58,237,0.22) 0%, rgba(168,85,247,0.08) 60%, rgba(9,9,26,0.6) 100%)',
-          border: '1px solid rgba(124,58,237,0.28)',
-        }}
-      >
-        {/* Glow orb */}
-        <div
-          className="absolute -top-10 -right-10 w-48 h-48 pointer-events-none"
-          style={{
-            background: 'radial-gradient(circle, rgba(168,85,247,0.22) 0%, transparent 70%)',
-          }}
-        />
+      {/* ── HERO ── */}
+      <div style={{
+        position: 'relative',
+        borderRadius: '16px',
+        padding: '1.75rem',
+        overflow: 'hidden',
+        background: 'linear-gradient(135deg, rgba(124,58,237,0.35) 0%, rgba(168,85,247,0.15) 50%, rgba(9,9,26,0.7) 100%)',
+        border: '1px solid rgba(168,85,247,0.4)',
+        boxShadow: '0 0 40px rgba(124,58,237,0.15), inset 0 1px 0 rgba(255,255,255,0.06)',
+      }}>
+        {/* Orb de glow */}
+        <div style={{
+          position: 'absolute', top: '-40px', right: '-40px',
+          width: '220px', height: '220px', pointerEvents: 'none',
+          background: 'radial-gradient(circle, rgba(168,85,247,0.3) 0%, transparent 65%)',
+        }} />
 
-        <div className="relative flex items-start justify-between mb-6">
+        <div style={{ position: 'relative', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
           <div>
-            <h2 className="text-xl font-bold text-white mb-1">Tu Marca Personal</h2>
-            <p className="text-sm" style={{ color: 'rgba(148,163,184,0.7)' }}>
+            <h2 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#fff', marginBottom: '0.3rem', letterSpacing: '-0.02em' }}>
+              Tu Marca Personal
+            </h2>
+            <p style={{ fontSize: '0.8rem', color: 'rgba(196,181,253,0.65)' }}>
               Centro de Control — Roadmap completo
             </p>
           </div>
-          <div className="text-right">
-            <div
-              className="text-5xl font-extrabold text-white tabular-nums text-glow-violet"
-              style={{ letterSpacing: '-0.03em' }}
-            >
+          <div style={{ textAlign: 'right', flexShrink: 0 }}>
+            <div style={{
+              fontSize: '4rem', fontWeight: 900, color: '#fff', lineHeight: 1,
+              letterSpacing: '-0.04em',
+              textShadow: '0 0 20px rgba(168,85,247,0.7), 0 0 50px rgba(124,58,237,0.4)',
+            }}>
               {totalProgress}%
             </div>
-            <div className="text-xs mt-0.5" style={{ color: 'rgba(196,181,253,0.6)' }}>
+            <div style={{ fontSize: '0.7rem', color: 'rgba(196,181,253,0.55)', marginTop: '0.2rem' }}>
               completado
             </div>
           </div>
         </div>
 
-        {/* Barra total */}
-        <div
-          className="relative h-2 rounded-full mb-5"
-          style={{ background: 'rgba(124,58,237,0.15)' }}
-        >
-          <div
-            className="absolute inset-y-0 left-0 rounded-full transition-all duration-700"
-            style={{
-              width: `${totalProgress}%`,
-              background: 'linear-gradient(to right, #7c3aed, #a855f7)',
-              boxShadow: '0 0 10px rgba(168,85,247,0.5)',
-            }}
-          />
+        {/* Barra */}
+        <div style={{
+          position: 'relative', height: '8px', borderRadius: '999px', marginBottom: '1.25rem',
+          background: 'rgba(124,58,237,0.25)',
+        }}>
+          <div style={{
+            position: 'absolute', inset: '0 auto 0 0', borderRadius: '999px',
+            width: `${totalProgress}%`,
+            background: 'linear-gradient(to right, #7c3aed, #a855f7, #c084fc)',
+            boxShadow: '0 0 14px rgba(168,85,247,0.6)',
+            transition: 'width 0.7s ease',
+          }} />
         </div>
 
-        {/* Estadísticas */}
-        <div className="grid grid-cols-3 gap-4">
+        {/* Stats */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.75rem' }}>
           {[
-            { label: 'Completados', value: completed,  color: '#4ade80', glow: 'rgba(74,222,128,0.2)'  },
-            { label: 'En progreso', value: inProgress, color: '#facc15', glow: 'rgba(250,204,21,0.2)'  },
-            { label: 'Pendientes',  value: pending,    color: '#4b5563', glow: 'transparent'            },
+            { label: 'Completados', value: completed,  color: '#4ade80', shadow: 'rgba(74,222,128,0.4)'  },
+            { label: 'En progreso', value: inProgress, color: '#facc15', shadow: 'rgba(250,204,21,0.4)'  },
+            { label: 'Pendientes',  value: pending,    color: '#6b7280', shadow: 'transparent'            },
           ].map(stat => (
-            <div
-              key={stat.label}
-              className="text-center rounded-xl py-3"
-              style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)' }}
-            >
-              <div
-                className="text-3xl font-bold tabular-nums"
-                style={{ color: stat.color, textShadow: `0 0 12px ${stat.glow}` }}
-              >
+            <div key={stat.label} style={{
+              textAlign: 'center', padding: '0.875rem 0.5rem',
+              borderRadius: '10px',
+              background: 'rgba(0,0,0,0.25)',
+              border: '1px solid rgba(255,255,255,0.08)',
+            }}>
+              <div style={{
+                fontSize: '2rem', fontWeight: 800, color: stat.color, lineHeight: 1,
+                textShadow: `0 0 16px ${stat.shadow}`,
+              }}>
                 {stat.value}
               </div>
-              <div className="text-xs mt-0.5" style={{ color: 'rgba(100,116,139,0.8)' }}>
+              <div style={{ fontSize: '0.7rem', color: 'rgba(148,163,184,0.65)', marginTop: '0.3rem' }}>
                 {stat.label}
               </div>
             </div>
@@ -114,89 +118,85 @@ export function DashboardModule({ data, progress, onNavigate }: Props) {
         </div>
       </div>
 
-      {/* ── Promesa de transformación ── */}
+      {/* ── PROMESA ── */}
       {data.transformacion.promesa && (
-        <div
-          className="rounded-xl p-4 text-center"
-          style={{
-            background: 'rgba(124,58,237,0.06)',
-            border: '1px solid rgba(124,58,237,0.2)',
-          }}
-        >
-          <p
-            className="text-[11px] font-semibold uppercase tracking-widest mb-2"
-            style={{ color: 'rgba(196,181,253,0.7)' }}
-          >
+        <div style={{
+          borderRadius: '12px', padding: '1rem 1.25rem', textAlign: 'center',
+          background: 'rgba(124,58,237,0.12)',
+          border: '1px solid rgba(168,85,247,0.3)',
+        }}>
+          <p style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(196,181,253,0.7)', marginBottom: '0.5rem' }}>
             Tu promesa de transformación
           </p>
-          <p className="text-white font-medium italic">"{data.transformacion.promesa}"</p>
+          <p style={{ color: '#fff', fontStyle: 'italic', fontWeight: 500, fontSize: '0.95rem' }}>
+            "{data.transformacion.promesa}"
+          </p>
         </div>
       )}
 
-      {/* ── Grid de módulos ── */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+      {/* ── MÓDULOS ── */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.875rem' }}>
         {modules.map(m => {
           const pct    = progress[m.progressKey] ?? 0;
           const status = pct >= 80 ? 'done' : pct > 0 ? 'wip' : 'empty';
 
-          const statusConfig = {
-            done:  { label: 'Completado',  color: '#4ade80', pillBg: 'rgba(74,222,128,0.1)',   barColor: '#4ade80', barGlow: 'rgba(74,222,128,0.3)'  },
-            wip:   { label: 'En progreso', color: '#facc15', pillBg: 'rgba(250,204,21,0.1)',   barColor: '#facc15', barGlow: 'rgba(250,204,21,0.3)'  },
-            empty: { label: 'Pendiente',   color: '#4b5563', pillBg: 'rgba(75,85,99,0.15)',    barColor: '#3f3f5e', barGlow: 'transparent'            },
+          const cfg = {
+            done:  { label: 'Completado',  badge: 'rgba(74,222,128,0.15)',  badgeTxt: '#4ade80', bar: '#4ade80', barGlow: 'rgba(74,222,128,0.5)'  },
+            wip:   { label: 'En progreso', badge: 'rgba(250,204,21,0.15)',  badgeTxt: '#facc15', bar: '#facc15', barGlow: 'rgba(250,204,21,0.5)'  },
+            empty: { label: 'Pendiente',   badge: 'rgba(107,114,128,0.15)', badgeTxt: '#6b7280', bar: '#374151', barGlow: 'transparent'            },
           }[status];
 
           return (
             <button
               key={m.id}
               onClick={() => onNavigate(m.id)}
-              className="text-left rounded-xl p-4 transition-all duration-200 group"
               style={{
-                background: 'rgba(255,255,255,0.02)',
-                border: '1px solid rgba(124,58,237,0.1)',
+                textAlign: 'left', borderRadius: '12px', padding: '1rem',
+                background: 'rgba(124,58,237,0.08)',
+                border: '1px solid rgba(124,58,237,0.22)',
+                cursor: 'pointer', transition: 'all 0.2s',
               }}
               onMouseEnter={e => {
                 const el = e.currentTarget as HTMLButtonElement;
-                el.style.background = 'rgba(124,58,237,0.07)';
-                el.style.borderColor = 'rgba(168,85,247,0.28)';
-                el.style.transform = 'translateY(-1px)';
+                el.style.background = 'rgba(124,58,237,0.18)';
+                el.style.borderColor = 'rgba(168,85,247,0.45)';
+                el.style.transform = 'translateY(-2px)';
+                el.style.boxShadow = '0 8px 24px rgba(124,58,237,0.2)';
               }}
               onMouseLeave={e => {
                 const el = e.currentTarget as HTMLButtonElement;
-                el.style.background = 'rgba(255,255,255,0.02)';
-                el.style.borderColor = 'rgba(124,58,237,0.1)';
+                el.style.background = 'rgba(124,58,237,0.08)';
+                el.style.borderColor = 'rgba(124,58,237,0.22)';
                 el.style.transform = 'translateY(0)';
+                el.style.boxShadow = 'none';
               }}
             >
-              <div className="flex items-start justify-between mb-3">
-                <span className="text-2xl">{m.emoji}</span>
-                <span
-                  className="text-[10px] font-semibold px-2 py-0.5 rounded-full"
-                  style={{ background: statusConfig.pillBg, color: statusConfig.color }}
-                >
-                  {statusConfig.label}
+              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+                <span style={{ fontSize: '1.6rem' }}>{m.emoji}</span>
+                <span style={{
+                  fontSize: '0.65rem', fontWeight: 700,
+                  padding: '0.2em 0.6em', borderRadius: '999px',
+                  background: cfg.badge, color: cfg.badgeTxt,
+                }}>
+                  {cfg.label}
                 </span>
               </div>
-              <div className="font-semibold text-sm text-white mb-1">{m.label}</div>
-              <div className="text-xs mb-3 truncate" style={{ color: 'rgba(100,116,139,0.8)' }}>
+              <div style={{ fontWeight: 700, fontSize: '0.875rem', color: '#fff', marginBottom: '0.3rem' }}>
+                {m.label}
+              </div>
+              <div style={{ fontSize: '0.75rem', color: 'rgba(148,163,184,0.6)', marginBottom: '0.75rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {m.summary(data)}
               </div>
-              <div
-                className="h-1 rounded-full"
-                style={{ background: 'rgba(124,58,237,0.1)' }}
-              >
-                <div
-                  className="h-full rounded-full transition-all duration-500"
-                  style={{
-                    width: `${pct}%`,
-                    background: statusConfig.barColor,
-                    boxShadow: pct > 0 ? `0 0 6px ${statusConfig.barGlow}` : 'none',
-                  }}
-                />
+              <div style={{ height: '4px', borderRadius: '999px', background: 'rgba(124,58,237,0.2)' }}>
+                <div style={{
+                  height: '100%', borderRadius: '999px',
+                  width: `${pct}%`,
+                  background: cfg.bar,
+                  boxShadow: pct > 0 ? `0 0 8px ${cfg.barGlow}` : 'none',
+                  transition: 'width 0.5s ease',
+                }} />
               </div>
-              <div
-                className="text-right text-[11px] mt-1 tabular-nums"
-                style={{ color: 'rgba(100,116,139,0.6)' }}
-              >
+              <div style={{ textAlign: 'right', fontSize: '0.7rem', color: 'rgba(148,163,184,0.45)', marginTop: '0.3rem' }}>
                 {pct}%
               </div>
             </button>

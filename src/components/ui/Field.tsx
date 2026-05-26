@@ -6,14 +6,15 @@ interface FieldProps {
 
 export function Field({ label, hint, children }: FieldProps) {
   return (
-    <div className="space-y-1.5">
-      <label
-        className="block text-[11px] font-semibold uppercase tracking-widest"
-        style={{ color: 'rgba(196,181,253,0.7)' }}
-      >
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+      <label style={{
+        fontSize: '0.65rem', fontWeight: 700,
+        textTransform: 'uppercase', letterSpacing: '0.1em',
+        color: 'rgba(196,181,253,0.75)',
+      }}>
         {label}
       </label>
-      {hint && <p className="text-xs" style={{ color: 'rgba(100,116,139,0.8)' }}>{hint}</p>}
+      {hint && <p style={{ fontSize: '0.75rem', color: 'rgba(100,116,139,0.75)' }}>{hint}</p>}
       {children}
     </div>
   );
@@ -24,19 +25,26 @@ export function Input(props: InputProps) {
   return (
     <input
       {...props}
-      className={`w-full rounded-lg px-3 py-2 text-sm text-white placeholder-slate-600 outline-none transition-all ${props.className ?? ''}`}
       style={{
-        background: 'rgba(124,58,237,0.04)',
-        border: '1px solid rgba(124,58,237,0.18)',
+        width: '100%',
+        background: 'rgba(7,7,18,0.6)',
+        border: '1px solid rgba(124,58,237,0.28)',
+        borderRadius: '8px',
+        padding: '0.55rem 0.75rem',
+        fontSize: '0.875rem',
+        color: '#e2e8f0',
+        outline: 'none',
+        transition: 'border-color 0.15s, box-shadow 0.15s',
         ...(props.style ?? {}),
       }}
+      className={props.className}
       onFocus={e => {
-        e.currentTarget.style.borderColor = 'rgba(168,85,247,0.55)';
-        e.currentTarget.style.boxShadow = '0 0 0 3px rgba(124,58,237,0.12)';
+        e.currentTarget.style.borderColor = 'rgba(168,85,247,0.7)';
+        e.currentTarget.style.boxShadow = '0 0 0 3px rgba(124,58,237,0.18)';
         props.onFocus?.(e);
       }}
       onBlur={e => {
-        e.currentTarget.style.borderColor = 'rgba(124,58,237,0.18)';
+        e.currentTarget.style.borderColor = 'rgba(124,58,237,0.28)';
         e.currentTarget.style.boxShadow = 'none';
         props.onBlur?.(e);
       }}
@@ -50,19 +58,27 @@ export function Textarea(props: TextareaProps) {
     <textarea
       rows={3}
       {...props}
-      className={`w-full rounded-lg px-3 py-2 text-sm text-white placeholder-slate-600 outline-none transition-all resize-none ${props.className ?? ''}`}
       style={{
-        background: 'rgba(124,58,237,0.04)',
-        border: '1px solid rgba(124,58,237,0.18)',
+        width: '100%',
+        background: 'rgba(7,7,18,0.6)',
+        border: '1px solid rgba(124,58,237,0.28)',
+        borderRadius: '8px',
+        padding: '0.55rem 0.75rem',
+        fontSize: '0.875rem',
+        color: '#e2e8f0',
+        outline: 'none',
+        resize: 'none',
+        transition: 'border-color 0.15s, box-shadow 0.15s',
         ...(props.style ?? {}),
       }}
+      className={props.className}
       onFocus={e => {
-        e.currentTarget.style.borderColor = 'rgba(168,85,247,0.55)';
-        e.currentTarget.style.boxShadow = '0 0 0 3px rgba(124,58,237,0.12)';
+        e.currentTarget.style.borderColor = 'rgba(168,85,247,0.7)';
+        e.currentTarget.style.boxShadow = '0 0 0 3px rgba(124,58,237,0.18)';
         props.onFocus?.(e);
       }}
       onBlur={e => {
-        e.currentTarget.style.borderColor = 'rgba(124,58,237,0.18)';
+        e.currentTarget.style.borderColor = 'rgba(124,58,237,0.28)';
         e.currentTarget.style.boxShadow = 'none';
         props.onBlur?.(e);
       }}
@@ -78,17 +94,19 @@ interface CardProps {
 export function Card({ children, className = '', title }: CardProps) {
   return (
     <div
-      className={`rounded-xl p-5 space-y-4 ${className}`}
+      className={className}
       style={{
-        background: 'rgba(124,58,237,0.04)',
-        border: '1px solid rgba(124,58,237,0.12)',
+        background: 'rgba(124,58,237,0.08)',
+        border: '1px solid rgba(124,58,237,0.2)',
+        borderRadius: '12px',
+        padding: '1.25rem',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1rem',
       }}
     >
       {title && (
-        <h3
-          className="text-sm font-semibold"
-          style={{ color: '#c4b5fd' }}
-        >
+        <h3 style={{ fontSize: '0.8rem', fontWeight: 700, color: '#c4b5fd' }}>
           {title}
         </h3>
       )}
@@ -107,10 +125,13 @@ interface ListFieldProps {
 export function ListField({ label, hint, values, onChange, placeholder }: ListFieldProps) {
   return (
     <Field label={label} hint={hint}>
-      <div className="space-y-2">
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
         {values.map((v, i) => (
-          <div key={`${label}-${i}`} className="flex items-center gap-2">
-            <span className="text-[11px] w-4 shrink-0 tabular-nums" style={{ color: 'rgba(124,58,237,0.5)' }}>
+          <div key={`${label}-${i}`} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <span style={{
+              fontSize: '0.65rem', width: '1.1rem', flexShrink: 0,
+              color: 'rgba(124,58,237,0.6)', fontVariantNumeric: 'tabular-nums',
+            }}>
               {i + 1}.
             </span>
             <Input
