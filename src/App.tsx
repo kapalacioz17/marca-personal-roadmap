@@ -96,7 +96,7 @@ export default function App() {
           onResetSection={handleResetSection}
         />
 
-        <main className="flex-1 overflow-y-auto p-6">
+        <main className="flex-1 overflow-y-auto p-8 md:p-10">
           {activeModule === 'dashboard' && (
             <DashboardModule data={data} progress={progress} onNavigate={setActiveModule} />
           )}

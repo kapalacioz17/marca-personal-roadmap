@@ -46,6 +46,7 @@ export function Sidebar({ active, onSelect, progress }: SidebarProps) {
       overflow: 'hidden',
       background: 'linear-gradient(180deg, #0e0e22 0%, #0a0a18 100%)',
       borderRight: '1px solid rgba(124,58,237,0.25)',
+      boxShadow: '4px 0 32px rgba(0,0,0,0.5)',
     }}>
 
       {/* Glow ambiental superior */}
@@ -101,7 +102,7 @@ export function Sidebar({ active, onSelect, progress }: SidebarProps) {
       </div>
 
       {/* ── Nav ── */}
-      <nav style={{ flex: 1, overflowY: 'auto', padding: '0.5rem 0', position: 'relative' }}>
+      <nav style={{ flex: 1, overflowY: 'auto', padding: '0.75rem 0', position: 'relative' }}>
         {items.map(item => {
           const progressKey = ID_TO_KEY[item.id] ?? item.id;
           const pct = item.id === 'dashboard' ? totalProgress : (progress[progressKey] ?? 0);
@@ -121,7 +122,7 @@ export function Sidebar({ active, onSelect, progress }: SidebarProps) {
               onClick={() => onSelect(item.id)}
               style={{
                 width: '100%', display: 'flex', alignItems: 'center',
-                gap: '0.6rem', padding: '0.6rem 1rem 0.6rem 0.85rem',
+                gap: '0.65rem', padding: '0.7rem 1.1rem 0.7rem 0.9rem',
                 textAlign: 'left', cursor: 'pointer', transition: 'all 0.15s',
                 borderTop: 'none', borderRight: 'none', borderBottom: 'none',
                 borderLeft: isActive ? '3px solid #a855f7' : '3px solid transparent',

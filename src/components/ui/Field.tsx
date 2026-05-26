@@ -98,11 +98,11 @@ export function Card({ children, className = '', title }: CardProps) {
       style={{
         background: 'rgba(124,58,237,0.08)',
         border: '1px solid rgba(124,58,237,0.2)',
-        borderRadius: '12px',
-        padding: '1.25rem',
+        borderRadius: '14px',
+        padding: '1.75rem',
         display: 'flex',
         flexDirection: 'column',
-        gap: '1rem',
+        gap: '1.25rem',
       }}
     >
       {title && (
