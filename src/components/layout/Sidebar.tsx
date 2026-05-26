@@ -28,9 +28,10 @@ interface SidebarProps {
 }
 
 export function Sidebar({ active, onSelect, progress }: SidebarProps) {
+  const ID_TO_KEY: Record<string, string> = { vision: 'visionDigital', lider: 'liderCarismatico' };
   const moduleItems = items.filter(i => i.id !== 'dashboard');
   const totalProgress = Math.round(
-    moduleItems.reduce((sum, item) => sum + (progress[item.id === 'lider' ? 'liderCarismatico' : item.id] ?? 0), 0) /
+    moduleItems.reduce((sum, item) => sum + (progress[ID_TO_KEY[item.id] ?? item.id] ?? 0), 0) /
     moduleItems.length
   );
 
@@ -62,7 +63,11 @@ export function Sidebar({ active, onSelect, progress }: SidebarProps) {
       {/* Nav */}
       <nav className="flex-1 overflow-y-auto py-2">
         {items.map(item => {
-          const progressKey = item.id === 'lider' ? 'liderCarismatico' : item.id;
+          const ID_TO_KEY: Record<string, string> = {
+            vision: 'visionDigital',
+            lider: 'liderCarismatico',
+          };
+          const progressKey = ID_TO_KEY[item.id] ?? item.id;
           const pct = item.id === 'dashboard' ? totalProgress : (progress[progressKey] ?? 0);
           const isActive = active === item.id;
 

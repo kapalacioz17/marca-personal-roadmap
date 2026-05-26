@@ -113,7 +113,7 @@ export const demoData: RoadmapData = {
   },
 
   movimiento: {
-    causaPropósito: 'Que ninguna mamá tenga que elegir entre su familia y su independencia económica.',
+    causaProposito: 'Que ninguna mamá tenga que elegir entre su familia y su independencia económica.',
     creencias: [
       'Puedes ser buena mamá y tener un negocio próspero',
       'No necesitas ser perfeccionista para empezar',
@@ -217,7 +217,7 @@ export const emptyData: RoadmapData = {
     logros: ['', '', ''],
   },
   movimiento: {
-    causaPropósito: '',
+    causaProposito: '',
     creencias: ['', '', '', ''],
     enemigosEnComun: ['', '', ''],
     rituales: ['', '', ''],

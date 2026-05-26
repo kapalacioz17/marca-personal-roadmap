@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
+import { Menu, X } from 'lucide-react';
 import type { ModuleId } from './types/roadmap';
 import { useRoadmap } from './hooks/useRoadmap';
 import { Sidebar } from './components/layout/Sidebar';
@@ -29,7 +30,13 @@ const MODULE_META: Record<ModuleId, { emoji: string; title: string }> = {
 
 export default function App() {
   const [activeModule, setActiveModule] = useState<ModuleId>('dashboard');
-  const { data, isDemo, updateSection, loadDemo, resetToEmpty, resetSection, exportData, getProgress } = useRoadmap();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const handleSelect = useCallback((id: ModuleId) => {
+    setActiveModule(id);
+    setSidebarOpen(false); // cierra en mobile al navegar
+  }, []);
+  const { data, isDemo, updateSection, updateIdeas, loadDemo, resetToEmpty, resetSection, exportData, getProgress } = useRoadmap();
   const progress = getProgress();
   const { emoji, title } = MODULE_META[activeModule];
 
@@ -60,9 +67,25 @@ export default function App() {
 
   return (
     <div className="flex h-screen overflow-hidden">
-      <Sidebar active={activeModule} onSelect={setActiveModule} progress={progress} />
+      {/* Sidebar: visible en md+, oculto en mobile salvo que esté abierto */}
+      <div className={`${sidebarOpen ? 'fixed inset-0 z-40 flex' : 'hidden md:flex'}`}
+           onClick={e => { if (e.target === e.currentTarget) setSidebarOpen(false); }}>
+        {sidebarOpen && <div className="absolute inset-0 bg-black/60 -z-10" onClick={() => setSidebarOpen(false)} />}
+        <Sidebar active={activeModule} onSelect={handleSelect} progress={progress} />
+      </div>
 
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col overflow-hidden min-w-0">
+        {/* Botón hamburguesa solo en mobile */}
+        <div className="md:hidden flex items-center gap-3 px-4 py-2 bg-[#0f0f13] border-b border-[#2a2a3e]">
+          <button
+            onClick={() => setSidebarOpen(v => !v)}
+            className="text-slate-400 hover:text-white p-1"
+          >
+            {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+          <span className="text-white font-semibold text-sm">{emoji} {title}</span>
+        </div>
+
         <Header
           title={title}
           emoji={emoji}
@@ -102,7 +125,7 @@ export default function App() {
             <ContenidoModule data={data.contenido} onChange={u => updateSection('contenido', u)} />
           )}
           {activeModule === 'ideas' && (
-            <IdeasModule data={data.ideas} onChange={ideas => updateSection('ideas', ideas as never)} />
+            <IdeasModule data={data.ideas} onChange={updateIdeas} />
           )}
         </main>
       </div>

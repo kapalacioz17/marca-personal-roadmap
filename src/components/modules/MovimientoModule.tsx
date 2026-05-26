@@ -19,8 +19,8 @@ export function MovimientoModule({ data, onChange }: Props) {
         <Card title="🧭 Ideal Filosófico">
           <Field label="¿Cuál es tu causa / propósito mayor?" hint="Lo que defendés más allá de tu producto">
             <Textarea
-              value={data.causaPropósito}
-              onChange={e => onChange({ causaPropósito: e.target.value })}
+              value={data.causaProposito}
+              onChange={e => onChange({ causaProposito: e.target.value })}
               placeholder="Lucho por un mundo donde..."
               rows={4}
             />

@@ -1,49 +1,75 @@
 import { useState, useEffect, useCallback } from 'react';
-import type { RoadmapData } from '../types/roadmap';
+import type { RoadmapData, Idea } from '../types/roadmap';
 import { demoData, emptyData } from '../data/demoData';
 
 const STORAGE_KEY = 'marca-personal-roadmap';
 
-function deepMerge<T>(target: T, source: Partial<T>): T {
+// Merge superficial de propiedades escalares/objeto — no se usa sobre arrays
+function shallowMerge<T extends object>(target: T, source: Partial<T>): T {
   const result = { ...target };
   for (const key in source) {
     const val = source[key];
-    if (val !== undefined && val !== null) {
+    if (val !== undefined) {
       (result as Record<string, unknown>)[key] = val;
     }
   }
   return result;
 }
 
+function safeParseRoadmap(raw: string): RoadmapData | null {
+  try {
+    const parsed = JSON.parse(raw) as Partial<RoadmapData>;
+    // Validación mínima de estructura
+    if (
+      typeof parsed !== 'object' ||
+      !parsed.visionDigital ||
+      !parsed.mercado ||
+      !parsed.avatar
+    ) return null;
+    // Rellenar campos que podrían faltar de versiones anteriores
+    return {
+      ...demoData,
+      ...parsed,
+    };
+  } catch {
+    return null;
+  }
+}
+
 export function useRoadmap() {
   const [data, setData] = useState<RoadmapData>(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) return JSON.parse(saved);
-    } catch {}
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const parsed = safeParseRoadmap(saved);
+      if (parsed) return parsed;
+    }
     return demoData;
   });
 
   const [isDemo, setIsDemo] = useState<boolean>(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      return !saved;
-    } catch {}
-    return true;
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return !saved;
   });
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
   }, [data]);
 
-  const updateSection = useCallback(<K extends keyof RoadmapData>(
+  // Actualiza secciones tipo objeto (todos los módulos excepto ideas)
+  const updateSection = useCallback(<K extends Exclude<keyof RoadmapData, 'ideas'>>(
     section: K,
     updates: Partial<RoadmapData[K]>
   ) => {
     setData(prev => ({
       ...prev,
-      [section]: deepMerge(prev[section], updates as Partial<RoadmapData[K]>),
+      [section]: shallowMerge(prev[section] as object, updates as object),
     }));
+    setIsDemo(false);
+  }, []);
+
+  // Setter dedicado para ideas (array de primer nivel)
+  const updateIdeas = useCallback((ideas: Idea[]) => {
+    setData(prev => ({ ...prev, ideas }));
     setIsDemo(false);
   }, []);
 
@@ -61,6 +87,7 @@ export function useRoadmap() {
 
   const resetSection = useCallback(<K extends keyof RoadmapData>(section: K) => {
     setData(prev => ({ ...prev, [section]: emptyData[section] }));
+    setIsDemo(false); // fix: resetSection también debe marcar como no-demo
   }, []);
 
   const exportData = useCallback(() => {
@@ -69,7 +96,9 @@ export function useRoadmap() {
     const a = document.createElement('a');
     a.href = url;
     a.download = 'mi-marca-personal.json';
+    document.body.appendChild(a); // fix: necesario para Firefox
     a.click();
+    document.body.removeChild(a);
     URL.revokeObjectURL(url);
   }, [data]);
 
@@ -88,18 +117,31 @@ export function useRoadmap() {
       return [0, 1];
     };
 
+    const clamp = (n: number) => Math.min(100, Math.max(0, Math.round(n)));
+
+    // Para secciones con estructura fija, usar emptyData como denominador
+    const fixedProgress = (key: Exclude<keyof RoadmapData, 'ideas'>) => {
+      const denominator = countFilled(emptyData[key])[1];
+      if (denominator === 0) return 0;
+      return clamp((countFilled(data[key])[0] / denominator) * 100);
+    };
+
+    // ideas: progreso basado en cuántas tienen contenido (máx 100%)
+    const ideasFilled = data.ideas.filter(i => i.contenido.trim() !== '').length;
+    const ideasProgress = data.ideas.length === 0 ? 0 : clamp((ideasFilled / data.ideas.length) * 100);
+
     return {
-      visionDigital: Math.round((countFilled(data.visionDigital)[0] / countFilled(emptyData.visionDigital)[1]) * 100),
-      mercado: Math.round((countFilled(data.mercado)[0] / countFilled(emptyData.mercado)[1]) * 100),
-      avatar: Math.round((countFilled(data.avatar)[0] / countFilled(emptyData.avatar)[1]) * 100),
-      oferta: Math.round((countFilled(data.oferta)[0] / countFilled(emptyData.oferta)[1]) * 100),
-      transformacion: Math.round((countFilled(data.transformacion)[0] / countFilled(emptyData.transformacion)[1]) * 100),
-      liderCarismatico: Math.round((countFilled(data.liderCarismatico)[0] / countFilled(emptyData.liderCarismatico)[1]) * 100),
-      movimiento: Math.round((countFilled(data.movimiento)[0] / countFilled(emptyData.movimiento)[1]) * 100),
-      contenido: Math.round((countFilled(data.contenido)[0] / countFilled(emptyData.contenido)[1]) * 100),
-      ideas: data.ideas.length > 0 && data.ideas.some(i => i.contenido.trim() !== '') ? 80 : 0,
+      visionDigital: fixedProgress('visionDigital'),
+      mercado: fixedProgress('mercado'),
+      avatar: fixedProgress('avatar'),
+      oferta: fixedProgress('oferta'),
+      transformacion: fixedProgress('transformacion'),
+      liderCarismatico: fixedProgress('liderCarismatico'),
+      movimiento: fixedProgress('movimiento'),
+      contenido: fixedProgress('contenido'),
+      ideas: ideasProgress,
     };
   }, [data]);
 
-  return { data, isDemo, updateSection, loadDemo, resetToEmpty, resetSection, exportData, getProgress };
+  return { data, isDemo, updateSection, updateIdeas, loadDemo, resetToEmpty, resetSection, exportData, getProgress };
 }

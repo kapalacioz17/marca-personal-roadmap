@@ -63,7 +63,10 @@ export function ListField({ label, hint, values, onChange, placeholder }: ListFi
     <Field label={label} hint={hint}>
       <div className="space-y-2">
         {values.map((v, i) => (
-          <div key={i} className="flex items-center gap-2">
+          // key estable basado en posición semántica: estas listas tienen longitud fija
+          // (no se elimina del medio), así que el índice como key es seguro aquí.
+          // MercadoModule tiene su propia tabla con keys por campo.
+          <div key={`${label}-${i}`} className="flex items-center gap-2">
             <span className="text-slate-600 text-xs w-4 shrink-0">{i + 1}.</span>
             <Input
               value={v}

@@ -67,7 +67,7 @@ export interface LiderCarismatico {
 }
 
 export interface Movimiento {
-  causaPropósito: string;
+  causaProposito: string;
   creencias: string[];
   enemigosEnComun: string[];
   rituales: string[];
