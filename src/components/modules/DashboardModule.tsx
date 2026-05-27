@@ -44,7 +44,7 @@ export function DashboardModule({ data, progress, onNavigate }: Props) {
   const activeModule = activeIdx >= 0 ? modules[activeIdx] : null;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
 
       {/* ══════════════ HERO HORIZONTAL (exacto al mockup C) ══════════════ */}
       <div style={{
@@ -111,11 +111,11 @@ export function DashboardModule({ data, progress, onNavigate }: Props) {
       </div>
 
       {/* ══════════════ 4 INFO-CARDS (exacto al mockup C) ══════════════ */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
 
         {/* Módulo Activo */}
         <div style={{
-          borderRadius: '12px', padding: '1.25rem 1.4rem',
+          borderRadius: '12px', padding: '1.6rem 1.5rem',
           background: 'rgba(255,255,255,0.03)',
           border: '1px solid rgba(124,58,237,0.18)',
         }}>
@@ -132,7 +132,7 @@ export function DashboardModule({ data, progress, onNavigate }: Props) {
 
         {/* Meta de Ingresos */}
         <div style={{
-          borderRadius: '12px', padding: '1.25rem 1.4rem',
+          borderRadius: '12px', padding: '1.6rem 1.5rem',
           background: 'rgba(255,255,255,0.03)',
           border: '1px solid rgba(124,58,237,0.18)',
         }}>
@@ -147,7 +147,7 @@ export function DashboardModule({ data, progress, onNavigate }: Props) {
 
         {/* Completados */}
         <div style={{
-          borderRadius: '12px', padding: '1.25rem 1.4rem',
+          borderRadius: '12px', padding: '1.6rem 1.5rem',
           background: 'rgba(255,255,255,0.03)',
           border: '1px solid rgba(124,58,237,0.18)',
         }}>
@@ -164,7 +164,7 @@ export function DashboardModule({ data, progress, onNavigate }: Props) {
 
         {/* Compromiso */}
         <div style={{
-          borderRadius: '12px', padding: '1.25rem 1.4rem',
+          borderRadius: '12px', padding: '1.6rem 1.5rem',
           background: 'rgba(255,255,255,0.03)',
           border: '1px solid rgba(124,58,237,0.18)',
         }}>
@@ -200,7 +200,7 @@ export function DashboardModule({ data, progress, onNavigate }: Props) {
           Módulos del Roadmap
         </p>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.25rem' }}>
           {modules.map(m => {
             const pct = progress[m.progressKey] ?? 0;
             const cfg = byPct(pct);
@@ -211,7 +211,7 @@ export function DashboardModule({ data, progress, onNavigate }: Props) {
                 onClick={() => onNavigate(m.id)}
                 style={{
                   textAlign: 'left', cursor: 'pointer',
-                  borderRadius: '12px', padding: '1.25rem',
+                  borderRadius: '12px', padding: '1.4rem 1.35rem',
                   background: 'rgba(255,255,255,0.03)',
                   border: '1px solid rgba(124,58,237,0.18)',
                   transition: 'all 0.2s',
