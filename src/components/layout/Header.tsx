@@ -10,7 +10,7 @@ interface HeaderProps {
   onResetSection: () => void;
 }
 
-export function Header({ title, emoji, isDemo, onLoadDemo, onReset, onExport, onResetSection }: HeaderProps) {
+export function Header({ title, emoji: _emoji, isDemo, onLoadDemo, onReset, onExport, onResetSection }: HeaderProps) {
   return (
     <header
       className="sticky top-0 z-10 px-6 py-3 flex items-center justify-between backdrop-blur-md"
